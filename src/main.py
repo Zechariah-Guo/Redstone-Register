@@ -1,3 +1,4 @@
+import os
 import re  # For mass commenting out SQL Queries
 
 from flask import Flask
@@ -5,10 +6,17 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import url_for
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 import database_manager as dbHandler
 
 app = Flask(__name__)
+
+# Behind Nginx/Cloudflare Tunnel: trust one proxy hop for scheme and host
+# so request.is_secure (and therefore HSTS) works. Set REDSTONE_TRUST_PROXY=1.
+if os.environ.get("REDSTONE_TRUST_PROXY") == "1":
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+
 
 
 SEARCH_QUERY_PATTERN = re.compile(r"[^a-zA-Z0-9\s'\-]")

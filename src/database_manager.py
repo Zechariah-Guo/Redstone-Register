@@ -1,7 +1,10 @@
+from pathlib import Path
+
 from sqlalchemy import create_engine
 from sqlalchemy import text
 
-ENGINE = create_engine("sqlite:///database/data_source.db", future=True)
+DB_PATH = Path(__file__).resolve().parent / "database" / "data_source.db"
+ENGINE = create_engine(f"sqlite:///{DB_PATH.as_posix()}", future=True)
 
 
 BASE_COMPONENT_QUERY = """

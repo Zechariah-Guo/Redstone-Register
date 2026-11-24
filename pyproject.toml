@@ -1,0 +1,23 @@
+[project]
+name = "redstone-register-pwa"
+version = "0.1.0"
+description = "Minecraft redstone component catalogue (Flask PWA)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask==3.1.3",
+    "sqlalchemy==2.0.48",
+]
+
+[dependency-groups]
+dev = [
+    "bandit==1.9.4",
+    "pip-audit==2.10.0",
+]
+prod = [
+    "gunicorn>=23.0",
+]
+
+[tool.uv]
+package = false
+default-groups = ["dev"]

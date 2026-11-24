@@ -34,36 +34,38 @@ A Flask-based Progressive Web App (PWA) that catalogues all 46 redstone componen
 
 ```
 Redstone-Register-PWA/
-├── main.py                  # Flask application entry point
-├── database_manager.py      # SQLAlchemy database queries
-├── requirements.txt         # Python dependencies
-├── database/
-│   └── data_source.db       # SQLite database with component data
-├── templates/
-│   ├── layout.html          # Base template
-│   ├── home.html            # Landing page
-│   ├── catalogue.html       # Main catalogue page
-│   ├── about.html           # About page with FAQ
-│   ├── offline.html         # Offline fallback page
-│   └── partials/
-│       ├── menu.html        # Navigation bar partial
-│       └── footer.html      # Footer partial
-├── static/
-│   ├── manifest.json        # PWA manifest
-│   ├── css/
-│   │   ├── style.css        # Main stylesheet
-│   │   └── theme-variables.css  # CSS custom properties for theming
-│   ├── js/
-│   │   ├── app.js           # Service worker registration & install prompt
-│   │   ├── catalogue.js     # Catalogue search, filter, sort logic
-│   │   ├── pinning.js       # Component pinning functionality
-│   │   ├── home.js          # Home page interactions
-│   │   ├── about.js         # FAQ accordion logic
-│   │   ├── theme.js         # Theme toggle (dark/light)
-│   │   └── serviceworker.js # Service worker for offline caching
-│   ├── fonts/               # Self-hosted web fonts
-│   ├── icons/               # PWA icons and screenshots
-│   └── images/              # Component images, backgrounds, and UI assets
+├── pyproject.toml           # Dependencies (managed with uv)
+├── uv.lock                  # Locked dependency versions
+├── src/
+│   ├── main.py                  # Flask application entry point
+│   ├── database_manager.py      # SQLAlchemy database queries
+│   ├── database/
+│   │   └── data_source.db       # SQLite database with component data
+│   ├── templates/
+│   │   ├── layout.html          # Base template
+│   │   ├── home.html            # Landing page
+│   │   ├── catalogue.html       # Main catalogue page
+│   │   ├── about.html           # About page with FAQ
+│   │   ├── offline.html         # Offline fallback page
+│   │   └── partials/
+│   │       ├── menu.html        # Navigation bar partial
+│   │       └── footer.html      # Footer partial
+│   ├── static/
+│   │   ├── manifest.json        # PWA manifest
+│   │   ├── css/
+│   │   │   ├── style.css        # Main stylesheet
+│   │   │   └── theme-variables.css  # CSS custom properties for theming
+│   │   ├── js/
+│   │   │   ├── app.js           # Service worker registration & install prompt
+│   │   │   ├── catalogue.js     # Catalogue search, filter, sort logic
+│   │   │   ├── pinning.js       # Component pinning functionality
+│   │   │   ├── home.js          # Home page interactions
+│   │   │   ├── about.js         # FAQ accordion logic
+│   │   │   ├── theme.js         # Theme toggle (dark/light)
+│   │   │   └── serviceworker.js # Service worker for offline caching
+│   │   ├── fonts/               # Self-hosted web fonts
+│   │   ├── icons/               # PWA icons and screenshots
+│   │   └── images/              # Component images, backgrounds, and UI assets
 └── docs/                    # Documentation and README resources
 ```
 
@@ -71,8 +73,8 @@ Redstone-Register-PWA/
 
 ### Prerequisites
 
-- Python 3.10 or later
-- pip
+- Python 3.12 or later
+- [uv](https://docs.astral.sh/uv/)
 
 ### Installation
 
@@ -82,26 +84,17 @@ Redstone-Register-PWA/
    cd Redstone-Register-PWA
    ```
 
-2. Create and activate a virtual environment:
+2. Install the dependencies:
    ```bash
-   python -m venv .venv
-   # Windows
-   .venv\Scripts\activate
-   # macOS / Linux
-   source .venv/bin/activate
+   uv sync
    ```
 
-3. Install dependencies:
+3. Run the application:
    ```bash
-   pip install -r requirements.txt
+   uv run python src/main.py
    ```
 
-4. Run the application:
-   ```bash
-   python main.py
-   ```
-
-5. Open your browser and navigate to `http://127.0.0.1:5000`
+4. Open your browser and navigate to `http://127.0.0.1:5000`
 
 ## Pages
 
