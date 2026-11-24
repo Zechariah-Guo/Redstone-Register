@@ -98,7 +98,7 @@ Redstone-Register-PWA/
 
 ## Deployment
 
-Production hosting (Oracle Cloud VM, Nginx, Cloudflare Tunnel) is described in [docs/deployment/Deployment Plans.md](docs/deployment/Deployment%20Plans.md).
+Production hosting (Oracle Cloud VM, Nginx, Cloudflare Tunnel) is shared with OreX and described in the [OreX deployment plan](https://github.com/Zechariah-Guo/OreX/blob/main/docs/planning/deployment/OreX%20Deployment%20Plans.md). Redstone Register's setup is in sections 5.3b and 5.3c.
 
 ## Pages
 
