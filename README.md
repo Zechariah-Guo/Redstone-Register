@@ -1,4 +1,4 @@
-![The Redstone Register Logo](static/images/logo.webp)
+![The Redstone Register Logo](src/static/images/logo.webp)
 
 # Redstone Register
 
