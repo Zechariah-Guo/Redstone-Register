@@ -1,6 +1,8 @@
-# OreX Deployment Plans
+# Deployment Plans: OreX + Redstone Register
 
-Complete deployment guide for hosting OreX on Oracle Cloud Free Tier with Cloudflare Tunnels and a custom domain.
+Complete deployment guide for hosting OreX and Redstone Register on one Oracle Cloud Free Tier VM with Cloudflare Tunnels and a custom domain.
+
+> OreX sections (privacy policy, log retention, admin scripts, database backups) apply to OreX only. Redstone Register setup is in 5.3b and 5.3c.
 
 ---
 
