@@ -96,6 +96,10 @@ Redstone-Register-PWA/
 
 4. Open your browser and navigate to `http://127.0.0.1:5000`
 
+## Deployment
+
+Production hosting (Oracle Cloud VM, Nginx, Cloudflare Tunnel) is described in [docs/deployment/Deployment Plans.md](docs/deployment/Deployment%20Plans.md).
+
 ## Pages
 
 | Route | Description |
