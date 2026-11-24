@@ -1,6 +1,6 @@
     {
-        "name": "Redstone Register PWA",
-        "short_name": "Red Reg",
+        "name": "Redstone Register",
+        "short_name": "Redstone Register",
         "start_url": "/",
         "scope": "/",
         "display": "standalone",
