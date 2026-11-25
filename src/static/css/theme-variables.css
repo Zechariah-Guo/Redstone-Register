@@ -1,14 +1,14 @@
 :root,
 :root[data-theme="light"] {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f4f4f4;
-    --bg-tertiary: #e9e9e9;
+    --bg-primary: #e6e6e6;
+    --bg-secondary: #d9d9d9;
+    --bg-tertiary: #cbcbcb;
     --text-primary: #1b1b1b;
     --text-secondary: #4f4f4f;
-    --border-colour: #d5d5d5;
-    --nav-bg: rgba(255, 255, 255, 0.85);
+    --border-colour: #b5b5b5;
+    --nav-bg: rgba(230, 230, 230, 0.88);
     --card-bg: #ffffff;
-    --card-shadow: rgba(0, 0, 0, 0.12);
+    --card-shadow: rgba(0, 0, 0, 0.18);
     --modal-overlay: rgba(0, 0, 0, 0.5);
     --accent-colour: #dc011d;
     --accent-colour-strong: #b40016;

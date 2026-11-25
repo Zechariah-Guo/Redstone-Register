@@ -119,6 +119,31 @@ document.addEventListener("DOMContentLoaded", () => {
         navBurger.setAttribute("aria-expanded", String(isExpanded));
     });
 
+    const closeNavMenu = () => {
+        if (!isExpanded) {
+            return;
+        }
+        isExpanded = false;
+        navbar.classList.remove("is-expanded");
+        navBurger.setAttribute("aria-expanded", "false");
+    };
+
+    document.addEventListener("click", (event) => {
+        if (isExpanded && !navbar.contains(event.target)) {
+            closeNavMenu();
+        }
+    });
+    navLinks.addEventListener("click", (event) => {
+        if (event.target.closest("a")) {
+            closeNavMenu();
+        }
+    });
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeNavMenu();
+        }
+    });
+
     window.addEventListener("resize", applyNavLayout);
     applyNavLayout();
 });

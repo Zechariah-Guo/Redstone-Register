@@ -26,7 +26,7 @@
     font-family: 'Material Symbols Outlined';
     font-style: normal;
     font-weight: 100 700;
-    font-display: swap;
+    font-display: block;
     src: url('../fonts/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDCvHOej.woff2') format('woff2');
 }
 * {
@@ -88,6 +88,8 @@ nav {
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-colour);
     cursor: default;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 :root[data-theme="light"] nav {
@@ -153,71 +155,100 @@ nav.is-compact {
 
 nav.is-compact .nav-burger {
     display: inline-flex;
+    order: 4;
+    margin-left: 0;
 }
 
 nav.is-compact #nav-logo-link {
     order: 1;
+    min-width: 0;
 }
 
-nav.is-compact .theme-toggle-button {
+nav.is-compact .install-button {
     order: 2;
     margin-left: auto;
 }
 
-nav.is-compact .install-button {
+nav.is-compact:not(.has-install) .install-button {
     display: none;
 }
 
-nav.is-compact .nav-burger {
+nav.is-compact .theme-toggle-button {
     order: 3;
+    margin-left: auto;
+}
+
+nav.is-compact.has-install .theme-toggle-button {
     margin-left: 0;
 }
 
-nav.is-compact .navbarsearch {
+nav.is-compact .navbarsearch,
+nav.is-compact .navsearchwrap {
     display: none !important;
 }
 
+/* Compact menu: a dropdown row that slides down under the bar. The bar itself never changes. */
 nav.is-compact .topnav {
-    display: none;
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex: none;
+    justify-content: space-evenly;
+    gap: 0.35rem;
+    padding: 0.5rem 0.6rem 0.6rem;
+    overflow: visible;
+    background-color: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-colour);
+    border-radius: 0 0 14px 14px;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-8px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: clip-path 200ms ease, transform 200ms ease, visibility 0s linear 200ms;
 }
 
-nav.is-compact.is-expanded {
-    justify-content: space-between;
-}
-
-nav.is-compact.is-expanded #nav-logo-link {
-    display: none;
+:root[data-theme="light"] nav.is-compact .topnav {
+    border-bottom: 2px solid #b6b6b6;
 }
 
 nav.is-compact.is-expanded .topnav {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+    transition: clip-path 200ms ease, transform 200ms ease, visibility 0s;
+}
+
+nav.is-compact .topnav li {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+nav.is-compact .topnav li a {
     display: flex;
-    flex: 1 1 auto;
-    order: 1;
-    justify-content: space-evenly;
-    overflow: visible;
-}
-
-nav.is-compact.is-expanded .install-button {
-    display: inline-flex;
-    order: 2;
-    margin-left: 0;
-}
-
-nav.is-compact.is-expanded:not(.has-install) .install-button {
-    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.15rem;
+    width: 100%;
+    min-height: 52px;
+    padding: 0.35rem 0.25rem;
+    border: 2px solid var(--border-colour);
+    border-radius: 10px;
+    background: var(--bg-secondary);
+    font-size: 15px;
+    text-align: center;
 }
 
 nav.is-compact.is-expanded .nav-burger {
-    order: 3;
-    margin-left: 0;
+    background: var(--bg-tertiary);
 }
 
-nav.is-compact.is-expanded .theme-toggle-button {
-    display: none;
-}
-
-nav.is-compact .nav-burger {
-    order: 3;
+nav.is-compact .topnav li a:hover,
+nav.is-compact .topnav li a:focus-visible {
+    background: var(--bg-tertiary);
 }
 
 .navbarsearch {
@@ -344,8 +375,6 @@ nav img:hover {
     padding: 1.25rem clamp(20px, 3vw, 30px);
     text-align: center;
     background: var(--bg-secondary);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     box-shadow: inset 0px 5px 4px rgba(64, 64, 64, 0.35);
     color: #ffffff;
     background-image: 
@@ -584,6 +613,8 @@ nav img:hover {
     font-style: normal;
     font-size: 24px;
     display: inline-block;
+    width: 1em;
+    overflow: hidden;
     line-height: 1;
     letter-spacing: normal;
     text-align: center;
@@ -1252,14 +1283,6 @@ nav img:hover {
         height: 60px;
     }
 
-    nav.is-compact.is-expanded .topnav {
-        gap: 0.35rem;
-    }
-
-    nav.is-compact.is-expanded .topnav li a {
-        font-size: 16px;
-        -webkit-text-stroke-width: 0;
-    }
 }
 
 .about-section {
@@ -1277,8 +1300,6 @@ nav img:hover {
     background-position: center;
     color: #ffffff;
     text-align: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
 }
 
 .about-hero {
@@ -1303,8 +1324,16 @@ nav img:hover {
 
 .about-content {
     width: 100%;
-    padding: 2.5rem clamp(20px, 3vw, 40px) 2.5rem;
+    padding: 2.5rem clamp(20px, 3vw, 40px) 2rem;
     background: var(--bg-primary);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .about-block {
@@ -1312,27 +1341,16 @@ nav img:hover {
     border: 2px solid var(--border-colour);
     border-radius: 16px;
     padding: 1.6rem 1.8rem;
-    max-width: 1100px;
-    margin: 0 auto 1.6rem;
     box-shadow: 0 12px 24px var(--card-shadow);
 }
 
 .about-block-img {
-    width: 90%;
-    height: 20%;
-    margin-left: 5%;
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 1.2rem;
+    border-radius: 8px;
     box-shadow: 0 12px 24px var(--card-shadow);
-}
-
-.about-block-img-2 {
-    width: 50%;
-    height: 10%;
-    margin-left: 25%;
-    box-shadow: 0 12px 24px var(--card-shadow);
-}
-
-.about-block:last-child {
-    margin-bottom: 0;
 }
 
 .about-block h3 {
@@ -1350,49 +1368,42 @@ nav img:hover {
     margin-bottom: 1rem;
 }
 
-.about-block p:last-child {
+.about-block p:last-of-type {
     margin-bottom: 0;
 }
 
-.faq-panel {
+.faq-panel,
+.resources-panel {
     width: 100%;
-    padding: 1.5rem clamp(20px, 3vw, 40px) 2.5rem;
+    padding: 1.5rem clamp(20px, 3vw, 40px) 2rem;
     background: var(--bg-primary);
 }
 
-.faq-panel-heading {
-    max-width: 1400px;
-    margin: 0 auto 1.4rem;
-}
-
-.faq-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: 2rem;
-    align-items: start;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.faq-questions-column {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
 .faq-heading {
+    max-width: 1400px;
+    margin: 0 auto 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--border-colour);
     font-size: 1.6rem;
     font-weight: 700;
     color: var(--text-primary);
 }
 
-.faq-questions-list {
+.faq-layout,
+.resources-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* FAQ: native <details> elements. Phone layout is a plain accordion. */
+.faq-list {
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
 }
 
-.faq-question-button {
+.faq-item summary {
+    list-style: none;
     border: 2px solid var(--border-colour);
     background: var(--bg-secondary);
     color: var(--text-primary);
@@ -1400,13 +1411,16 @@ nav img:hover {
     border-radius: 12px;
     font-weight: 700;
     font-size: 1.05rem;
-    text-align: left;
     position: relative;
     cursor: pointer;
-    transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+    transition: background-color 180ms ease, color 180ms ease;
 }
 
-.faq-question-button::after {
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item summary::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -1415,46 +1429,33 @@ nav img:hover {
     height: 9px;
     border-right: 2px solid currentColor;
     border-bottom: 2px solid currentColor;
-    transform: translateY(-50%) rotate(-45deg);
+    transform: translateY(-50%) rotate(45deg);
     opacity: 0.7;
-    transition: opacity 180ms ease, transform 180ms ease;
+    transition: transform 180ms ease, opacity 180ms ease;
 }
 
-.faq-question-button:hover::after,
-.faq-question-button:focus-visible::after,
-.faq-question-button.is-active::after {
-    opacity: 1;
-    transform: translateY(-50%) rotate(-45deg) translateX(2px);
-}
-
-.faq-question-button:hover,
-.faq-question-button:focus-visible {
-    transform: translateY(-2px);
+.faq-item summary:hover,
+.faq-item summary:focus-visible {
     background: var(--bg-tertiary);
 }
 
-.faq-question-button:focus-visible {
+.faq-item summary:focus-visible {
     outline: 3px solid var(--focus-ring);
     outline-offset: 2px;
 }
 
-.faq-question-button.is-active {
+.faq-item[open] summary {
     background: var(--text-primary);
     color: var(--bg-primary);
     border-color: var(--text-primary);
 }
 
-.faq-answer-panel {
-    background: var(--card-bg);
-    border: 2px solid var(--border-colour);
-    border-radius: 16px;
-    padding: 1.5rem;
-    min-height: 360px;
-    box-shadow: 0 12px 24px var(--card-shadow);
-    overflow-y: auto;
+.faq-item[open] summary::after {
+    opacity: 1;
+    transform: translateY(-50%) rotate(-135deg);
 }
 
-.faq-answer-inline {
+.faq-answer {
     margin-top: 0.6rem;
     padding: 0.9rem 1rem;
     border-radius: 12px;
@@ -1466,48 +1467,47 @@ nav img:hover {
     box-shadow: 0 10px 20px var(--card-shadow);
 }
 
-.faq-answer-inline h3 {
+.faq-answer h3 {
+    display: none;
     color: var(--text-primary);
     margin-bottom: 0.5rem;
-    font-size: 1.2rem;
-}
-
-.faq-answer-placeholder {
-    opacity: 1;
-    transform: none;
-    transition: none;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    font-size: 1.05rem;
-}
-
-.faq-answer-placeholder.is-visible {
-    opacity: 1;
-    transform: none;
-}
-
-.faq-answer-placeholder h3 {
-    color: var(--text-primary);
-    margin-bottom: 0.65rem;
     font-size: 1.35rem;
 }
 
-.faq-wiki-column {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    padding: 1.5rem;
-    background: var(--bg-secondary);
-    border: 2px solid var(--border-colour);
-    border-radius: 16px;
-    box-shadow: 0 12px 24px var(--card-shadow);
+/* Smooth open/close where supported (Chromium); other browsers just snap. */
+@supports (interpolate-size: allow-keywords) {
+    .faq-item {
+        interpolate-size: allow-keywords;
+    }
+
+    .faq-item::details-content {
+        block-size: 0;
+        overflow: hidden;
+        transition: block-size 220ms ease, content-visibility 220ms allow-discrete;
+    }
+
+    .faq-item[open]::details-content {
+        block-size: auto;
+    }
 }
 
-.faq-wiki-heading {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--text-primary);
+/* Related resources */
+.resources-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.resources-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.resources-stack .wiki-link {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
 }
 
 .wiki-link {
@@ -1515,10 +1515,11 @@ nav img:hover {
     text-decoration: none;
     padding: 0.75rem 0.9rem;
     border-radius: 10px;
-    background: var(--bg-primary);
+    background: var(--bg-secondary);
     color: var(--text-primary);
-    border: 2px solid transparent;
-    font-size: 0.95rem;
+    border: 2px solid var(--border-colour);
+    font-size: 1rem;
+    font-weight: 700;
     transition: border-color 180ms ease, transform 180ms ease, background-color 180ms ease;
 }
 
@@ -1535,21 +1536,15 @@ nav img:hover {
     background-position: top center;
     background-repeat: no-repeat;
     padding: 0.6rem;
-    min-height: 64px;
+    min-height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-color: transparent;
 }
 
 .wiki-link-grass:hover,
 .wiki-link-grass:focus-visible {
-    background-image: url("../images/Grass-background.webp");
-    background-size: cover;
-    background-position: top center;
-    background-repeat: no-repeat;
     background-color: transparent;
-    background-position: top center;
 }
 
 .wiki-link-image {
@@ -1558,8 +1553,108 @@ nav img:hover {
     display: block;
 }
 
-.faq-answer-bank.hidden {
-    display: none;
+.orex-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 120px;
+    text-align: center;
+}
+
+.orex-link-image {
+    height: 56px;
+    width: auto;
+}
+
+.orex-link span {
+    font-size: 1.15rem;
+}
+
+.orex-link small {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+/* Desktop: questions on the left (scrolls), the open answer in a panel on the right. */
+@media (min-width: 900px) {
+    .about-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .about-block {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about-block-img {
+        margin-top: auto;
+        padding-top: 0;
+    }
+
+    .about-block p:last-of-type {
+        margin-bottom: 1.2rem;
+    }
+
+    .faq-layout {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+        gap: 1.5rem;
+        height: 440px;
+    }
+
+    .faq-list {
+        overflow-y: auto;
+        padding: 4px 0.75rem 4px 4px;
+        scrollbar-width: thin;
+        scrollbar-color: var(--text-secondary) var(--bg-secondary);
+    }
+
+    .faq-item summary:hover,
+    .faq-item summary:focus-visible {
+        transform: translateX(2px);
+    }
+
+    .faq-item summary::after {
+        transform: translateY(-50%) rotate(-45deg);
+    }
+
+    .faq-item[open] summary::after {
+        transform: translateY(-50%) rotate(-45deg) translateX(2px);
+    }
+
+    /* The answer is pinned to the right column of .faq-layout, outside the scrolling list. */
+    .faq-answer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: calc((100% - 1.5rem) * 1.4 / 2.4);
+        margin: 0;
+        padding: 1.5rem;
+        border-radius: 16px;
+        background: var(--card-bg);
+        box-shadow: 0 12px 24px var(--card-shadow);
+        overflow-y: auto;
+        font-size: 1.05rem;
+    }
+
+    .faq-answer h3 {
+        display: block;
+    }
+
+    .faq-item::details-content {
+        block-size: auto;
+        overflow: visible;
+        transition: none;
+    }
+
+    .resources-grid {
+        grid-template-columns: 1fr 1.4fr 1fr;
+    }
 }
 
 @media (max-width: 450px) {
@@ -1569,7 +1664,7 @@ nav img:hover {
     }
 
     nav img {
-        height: 36px;
+        height: 34px;
         padding-top: 2px;
     }
 
@@ -1578,60 +1673,6 @@ nav img:hover {
     .install-button {
         width: 36px;
         height: 36px;
-    }
-
-    nav.is-compact.is-expanded .topnav {
-        justify-content: flex-start;
-        gap: 0.5rem;
-    }
-
-    nav.is-compact.is-expanded .install-button {
-        margin-left: auto;
-    }
-
-    .faq-grid {
-        grid-template-columns: 1fr;
-        gap: 1.25rem;
-    }
-
-    .faq-panel-heading {
-        margin-bottom: 1rem;
-    }
-
-    .faq-answer-panel {
-        display: none;
-    }
-
-    .faq-wiki-column {
-        position: static;
-        max-height: none;
-        overflow: visible;
-    }
-
-    .faq-question-button::after,
-    .faq-question-button:hover::after,
-    .faq-question-button:focus-visible::after {
-        transform: translateY(-50%) rotate(45deg) !important;
-    }
-
-    .faq-question-button.is-active::after,
-    .faq-question-button.is-active:hover::after,
-    .faq-question-button.is-active:focus-visible::after {
-        transform: translateY(-50%) rotate(-135deg) !important;
-    }
-
-    .faq-answer-inline {
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        padding: 0 1rem;
-        transition: max-height 240ms ease, opacity 180ms ease, padding 180ms ease;
-    }
-
-    .faq-answer-inline.is-open {
-        max-height: 520px;
-        opacity: 1;
-        padding: 0.9rem 1rem;
     }
 }
 
@@ -1962,11 +2003,10 @@ html[data-theme="dark"] .theme-toggle-button .theme-icon-light {
 
 @media (prefers-reduced-motion: reduce) {
     .minecraft-button,
-    .faq-question-button,
     .pin-button,
     .card,
     .filters-panel,
-    .faq-answer-placeholder {
+    .faq-item summary {
         transition: none;
     }
 
@@ -1985,63 +2025,80 @@ html[data-theme="dark"] .theme-toggle-button .theme-icon-light {
     }
 }
 
-@media (max-width: 1100px) {
-    .faq-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .faq-wiki-column {
-        position: static;
-    }
-}
-
 .site-footer {
     position: static;
     margin-top: auto;
     padding: 1rem;
     border-top: 2px solid var(--border-colour);
     background: var(--bg-secondary);
+    text-align: center;
+    color: var(--text-secondary);
 }
 
 .site-footer-inner {
     width: min(1040px, 96%);
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.site-footer-logo {
-    width: auto;
-    height: 44px;
-}
-
-.site-footer-copy {
-    color: var(--text-primary);
-    font-weight: 700;
+    gap: 0.5rem;
 }
 
 .site-footer-pages {
-    margin-left: 1rem;
-    padding-left: 1.2rem;
-    list-style: disc;
+    list-style: none;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .site-footer-pages a {
-    color: var(--text-primary);
+    color: var(--text-secondary);
     font-weight: 700;
+    font-size: 0.9rem;
     text-decoration: none;
-    padding-right: 10px;
 }
 
 .site-footer-pages a:hover,
 .site-footer-pages a:focus-visible {
+    color: var(--accent-colour);
     text-decoration: underline;
 }
 
+.site-footer-copy {
+    font-size: 0.8rem;
+}
 
+.site-footer-notice {
+    font-size: 0.65rem;
+    max-width: 38rem;
+    text-wrap: balance;
+}
+
+@media (max-width: 640px) {
+    .site-footer {
+        padding: 0.75rem 1rem;
+    }
+
+    .site-footer-inner {
+        gap: 0.25rem;
+        line-height: 1.3;
+    }
+
+    .site-footer-pages {
+        gap: 1rem;
+    }
+
+    .site-footer-pages a {
+        font-size: 0.8rem;
+    }
+
+    .site-footer-copy {
+        font-size: 0.7rem;
+    }
+
+    .site-footer-notice {
+        font-size: 0.6rem;
+        line-height: 1.25;
+    }
+}

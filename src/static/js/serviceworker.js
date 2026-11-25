@@ -16,7 +16,6 @@ const CORE_ASSETS = [
     "/static/fonts/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDCvHOej.woff2",
     "/static/images/logo.webp",
     "/static/images/favicon.webp",
-    "/static/images/logo-footer.webp",
     "/static/icons/icon-128x128.png",
     "/static/icons/icon-192x192.png",
     "/static/icons/icon-384x384.png",
@@ -34,7 +33,7 @@ const OPTIONAL_ASSETS = [
     "/static/icons/mobile_screenshot.png",
 ];
 
-const CATALOGUE_ASSETS = "catalogue-assets-v13";
+const CATALOGUE_ASSETS = "catalogue-assets-v18";
 
 self.addEventListener("install", (installEvt) => {
     installEvt.waitUntil(
@@ -108,6 +107,25 @@ self.addEventListener("fetch", function (evt) {
         return;
     }
 
+    // CSS and JS change with every deploy, so try the network first and use the cache only offline.
+    if (evt.request.destination === "style" || evt.request.destination === "script") {
+        evt.respondWith(
+            fetch(evt.request)
+                .then((response) => {
+                    if (response && response.ok) {
+                        const responseCopy = response.clone();
+                        caches.open(CATALOGUE_ASSETS).then((cache) => {
+                            cache.put(evt.request, responseCopy);
+                        });
+                    }
+                    return response;
+                })
+                .catch(() => caches.match(evt.request))
+        );
+        return;
+    }
+
+    // Images and fonts rarely change: serve from cache first.
     evt.respondWith(
         caches.match(evt.request).then((cachedResponse) => {
             if (cachedResponse) {

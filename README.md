@@ -96,10 +96,6 @@ Redstone-Register-PWA/
 
 4. Open your browser and navigate to `http://127.0.0.1:5000`
 
-## Deployment
-
-Production hosting (Oracle Cloud VM, Nginx, Cloudflare Tunnel) is shared with OreX and described in the [OreX deployment plan](https://github.com/Zechariah-Guo/OreX/blob/main/docs/planning/deployment/OreX%20Deployment%20Plans.md). Redstone Register's setup is in sections 5.3b and 5.3c.
-
 ## Pages
 
 | Route | Description |
